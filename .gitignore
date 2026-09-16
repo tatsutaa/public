@@ -1,0 +1,7 @@
+# WordPressや一般的なPHP環境の不要なシステムファイルをすべて無視する
+*
+!*.php
+!*.html
+!*.css
+!*.js
+!.gitignore
