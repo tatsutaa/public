@@ -29,22 +29,24 @@ h1 {
    1. ヒーローセクション（画面全体の土台）
    ========================================== */
 .hero-section {
-    position: relative;         /* 💡 必須：フィルターや文字を重ねる基準 */
+    position: relative;
     width: 100%;
-    height: 100vh;             /* 💡 縦画面のときも画面の高さ100%いっぱいにする */
-    height: 100dvh;            /* スマホのツールバー対策 */
-    background-color: #000;    
-    display: flex;
-    justify-content: center;   /* 文字を左右中央に */
-    align-items: center;       /* 文字を上下中央に */
-    text-align: center;
-    overflow: hidden;          /* 画面外へのはみ出しをカット */
+    height: 100vh;           
+    height: 100dvh;          /* スマホのツールバー対策 */
     
-    /* 💡 元々あった「.hero-section」自体の背景画像の設定はここから完全に削除します */
+    /* 💡 修正ポイント：上下の余白を真っ黒ではなく、背景の芝生に近いグリーンで馴染ませる */
+    background-color: #58a43c; /* 芝生風の緑（お好みで #000 などの黒でもOKです） */
+    
+    display: flex;
+    justify-content: center; /* 文字を左右中央に */
+    align-items: center;     /* 文字を上下中央に */
+    text-align: center;
+    overflow: hidden;
+    animation: fadeInBackground 1.5s ease-out forwards;
 }
 
 /* ==========================================
-   2. 背景画像 ＋ 暗くするフィルター（黒帯を無くし、全面に敷き詰める）
+   2. 背景画像 ＋ 暗くするフィルター（画像は絶対に切らない！）
    ========================================== */
 .hero-section::before {
     content: "";
@@ -54,40 +56,56 @@ h1 {
     width: 100%;
     height: 100%;
     
-    /* 💡 画像の上に50%の暗さの黒いフィルターを均一に重ねる */
+    /* 💡 画像全体に一律で50%の暗さのフィルターを重ねる */
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('kirvy.jpg');
     
-    /* 💡 決定的な修正：上下の黒帯を完全に消し、縦画面でも100%敷き詰める設定 */
-    background-size: cover !important;      
-    background-position: center center !important; /* 画像の真ん中（カーヴィーの顔）を中心に固定 */
+    /* 💡 決定版：画像を絶対に「切らない」で100%全体を表示する設定 */
+    background-size: contain !important;      
+    background-position: center center !important; /* 上下のど真ん中に配置 */
     background-repeat: no-repeat;
     
-    z-index: 1;                 /* 文字の後ろに配置 */
+    z-index: 1; /* 文字の後ろ */
 }
 
 /* ==========================================
-   3. タイトル文字の設定（暗いフィルターの手前に重ねる）
+   3. タイトル文字の設定（文字を一番見えやすい位置に配置）
    ========================================== */
 .hero-content {
-    position: relative;         /* z-indexを有効にするために必須 */
-    z-index: 2;                 /* 💡 背景と暗いフィルター（z-index:1）より手前に重ねる */
+    position: relative;
+    z-index: 2; /* 背景・画像より手前に重ねる */
     color: #ffffff;
     width: 100%;
-    max-width: 90%;             /* スマホの画面端から文字がはみ出るのを防ぐ */
+    max-width: 90%;
     padding: 0 15px;
     box-sizing: border-box;
+    opacity: 1; /* すぐに確認できるよう表示状態にしています */
     
-    /* 💡 最初から文字を表示させて確認するため、一時的にopacityを1にします。
-       もしJavaScriptによるフワッとした動きに戻したい場合は「opacity: 0;」に戻してください */
-    opacity: 1; 
-    /* animation: fadeInUpText 1.2s ease-out 0.8s forwards; */
+    /* 💡 修正ポイント：文字を画面全体の「上下中央」ではなく、
+       カーヴィーの顎（あご）の下や画像の下側など、文字が最もクッキリ見える位置へずらす調整 */
+    margin-top: 180px; 
 }
 
 .hero-content h1 {
-    font-size: 3rem;            /* パソコンでの大きな文字サイズ */
+    font-size: 3rem;
     margin: 0;
     line-height: 1.3;
     font-weight: bold;
+    
+    /* 💡 文字の後ろにうっすらと黒い影をつけ、背景と被っても絶対に読めるようにする加工 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), -1px -1px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* ==========================================
+   4. スマートフォン（縦画面）専用のサイズ調整
+   ========================================== */
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 1.6rem !important; /* スマホ用に文字を読みやすいサイズに縮小 */
+    }
+    .hero-content {
+        /* スマホの縦画面のときは、文字のズレ具合をここで微調整できます */
+        margin-top: 140px; 
+    }
 }
 
 /* ==========================================
