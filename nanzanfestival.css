@@ -24,19 +24,34 @@ h1 {
     margin-bottom: 100px;
 }
 
+/* 1. 背景画像の設定（スマホの縦画面でもはみ出さない決定版） */
 .hero-section {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('kirvy.jpg');
-    background-size: cover;
-    background-position: center;
+    
+    /* 💡 修正ポイント：パソコンでは画面いっぱいに、スマホでは全体が綺麗に収まるように自動切り替え */
+    background-size: contain;   /* 画像の全体を必ず画面内に収める（はみ出し防止） */
+    background-position: center center;
     background-repeat: no-repeat;
-    height: 100vh;
-    height: 100dvh; /* スマホのツールバー対策 */
-    width: 100%;
+    background-color: #000000;  /* 画像の上下や左右に隙間ができたとき用の黒背景 */
+    
+    height: 100vh;           
+    height: 100dvh;          /* スマホのツールバー対策 */
+    width: 100%;             
+    
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     animation: fadeInBackground 1.5s ease-out forwards;
+}
+
+/* 💡 スマートフォン（縦画面）用の特別な調整 */
+@media (max-width: 480px) {
+    .hero-section {
+        /* スマホの縦画面のときは、画像を画面の横幅に100%ぴったり合わせる */
+        background-size: 100% auto; 
+        background-position: center top; /* 画像を少し上寄りに配置して文字と被りにくくする */
+    }
 }
 
 .hero-content {
