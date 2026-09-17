@@ -132,3 +132,12 @@ img {
         margin-bottom: 50px;
     }
 }
+
+/* 各画像グループの横幅を画面幅（100%）に固定する */
+.other-section div {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-bottom: 40px;
+    text-align: center;
+    overflow: hidden; /* 万が一中身がはみ出しても外に突き抜けさせない */
+}
