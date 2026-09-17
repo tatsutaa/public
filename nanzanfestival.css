@@ -19,7 +19,12 @@ h1 {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    height: 100vh;
+    
+    /* 💡 修正ポイント：スマホのツールバー対策 */
+    height: 100vh;           /* 古いブラウザ用 */
+    height: 100dvh;          /* 動的ビューポート（スマホのツールバーを考慮した高さ） */
+    width: 100%;             /* 横幅いっぱいに広げる */
+    
     display: flex;
     justify-content: center;
     align-items: center;
