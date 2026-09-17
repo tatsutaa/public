@@ -1,0 +1,96 @@
+h1 {
+    text-align: center;            /* 中央揃え */
+    font-size: 36px;               /* フォントサイズを大きくする */
+    margin-top: 100px;             /* 上の余白を大きくする */
+    margin-bottom: 100px;          /* 下の余白を大きくする */
+}
+.section-title {
+    padding-left: 10px;            /* 文字と左の線の間にスキマを作る */
+    border-left: 5px solid #333; /* 左側に5pxの太さの縦線を引く */
+    margin-bottom: 20px;           /* 下のコンテンツとの間隔 */
+    opacity: 0;
+
+    animation: fadeInUpText 1.2s ease-out 1.0s forwards; /* 💡 1秒遅れてスタート */
+}
+
+/* 1. 背景画像の設定（ページを開くと同時にじわっと現れる） */
+.hero-section {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('kirvy.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    /* 0秒からスタートして1.5秒かけて現れる */
+    animation: fadeInBackground 1.5s ease-out forwards;
+}
+
+/* 2. 文字全体の設定（初期状態は透明にしておく） */
+.hero-content {
+    color: #ffffff;
+    opacity: 0; 
+    
+    /* 💡 0.8秒遅れて（delay）スタートし、1.2秒かけて浮き上がる */
+    animation: fadeInUpText 1.2s ease-out 0.8s forwards;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+/* ==========================================
+   アニメーションの動きの定義（@keyframes）
+   ========================================== */
+
+/* 背景用：透明度だけを 0 から 1 にする */
+@keyframes fadeInBackground {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* 💡 文字用：20px下（Y軸）から、元の位置（0）に移動しながら現れる */
+@keyframes fadeInUpText {
+    from {
+        opacity: 0;
+        transform: translateY(20px); 
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 1. スクロール前の初期状態（透明にして、少し下に下げておく） */
+.js-fade h2 {           
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.js-fade p {      
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+/* 2. 💡 スクロールして画面に入った瞬間（is-activeがついたとき） */
+.js-fade.is-active h2 {
+    /* 0.3秒かけて上にふわっと現れる */
+    animation: fadeInUpText 1.5s ease-out forwards;
+}
+
+.js-fade.is-active p {
+    /* 💡 見出しより「0.4秒遅れて」文章が現れる時間差エフェクト */
+    animation: fadeInUpText 1.5s ease-out 0.4s forwards;
+}
+
+/* アニメーションの動きの定義（下から上に浮き上がる） */
+@keyframes fadeInUpText {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
