@@ -29,21 +29,22 @@ h1 {
    1. ヒーローセクション（画面全体の土台）
    ========================================== */
 .hero-section {
-    position: relative;       /* 💡 必須：フィルターや文字を上に重ねる基準 */
+    position: relative;         /* 💡 必須：フィルターや文字を重ねる基準 */
     width: 100%;
-    height: 100vh;           
-    height: 100dvh;          /* スマホのツールバーの伸び縮みに自動対応 */
-    background-color: #000;  /* 読み込み前の万が一の黒背景 */
+    height: 100vh;             /* 💡 縦画面のときも画面の高さ100%いっぱいにする */
+    height: 100dvh;            /* スマホのツールバー対策 */
+    background-color: #000;    
     display: flex;
-    justify-content: center; /* 💡 文字を画面の左右中央に配置 */
-    align-items: center;     /* 💡 文字を画面の上下中央に配置 */
+    justify-content: center;   /* 文字を左右中央に */
+    align-items: center;       /* 文字を上下中央に */
     text-align: center;
-    overflow: hidden;        /* 💡 画面外へのはみ出しを絶対に許さない */
-    animation: fadeInBackground 1.5s ease-out forwards;
+    overflow: hidden;          /* 画面外へのはみ出しをカット */
+    
+    /* 💡 元々あった「.hero-section」自体の背景画像の設定はここから完全に削除します */
 }
 
 /* ==========================================
-   2. 背景画像 ＋ 暗くするフィルター（画面全体に完璧に敷き詰める）
+   2. 背景画像 ＋ 暗くするフィルター（黒帯を無くし、全面に敷き詰める）
    ========================================== */
 .hero-section::before {
     content: "";
@@ -53,36 +54,50 @@ h1 {
     width: 100%;
     height: 100%;
     
-    /* 💡 画像全体を 60% の暗さのフィルターで均一に覆う */
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('kirvy.jpg');
+    /* 💡 画像の上に50%の暗さの黒いフィルターを均一に重ねる */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('kirvy.jpg');
     
-    /* 💡 スマホの縦画面でも余白を作らず、画面全体に綺麗に敷き詰める設定 */
-    background-size: cover;      
-    background-position: center; /* 💡 画像の中心を画面の真ん中に固定する（左右の端が均等にカットされる） */
+    /* 💡 決定的な修正：上下の黒帯を完全に消し、縦画面でも100%敷き詰める設定 */
+    background-size: cover !important;      
+    background-position: center center !important; /* 画像の真ん中（カーヴィーの顔）を中心に固定 */
     background-repeat: no-repeat;
-    z-index: 1;                  /* 文字の「後ろ」に配置 */
+    
+    z-index: 1;                 /* 文字の後ろに配置 */
 }
 
 /* ==========================================
-   3. タイトル文字の設定（暗いフィルターの「上」に重ねる）
+   3. タイトル文字の設定（暗いフィルターの手前に重ねる）
    ========================================== */
 .hero-content {
-    position: relative;       /* 💡 z-indexを有効にするために必須 */
-    z-index: 2;               /* 💡 背景と暗いフィルター（z-index:1）より手前に重ねる */
+    position: relative;         /* z-indexを有効にするために必須 */
+    z-index: 2;                 /* 💡 背景と暗いフィルター（z-index:1）より手前に重ねる */
     color: #ffffff;
-    opacity: 0; 
     width: 100%;
-    max-width: 90%;           /* 💡 スマホの画面端から文字がはみ出るのを防ぐ */
+    max-width: 90%;             /* スマホの画面端から文字がはみ出るのを防ぐ */
     padding: 0 15px;
     box-sizing: border-box;
-    animation: fadeInUpText 1.2s ease-out 0.8s forwards;
+    
+    /* 💡 最初から文字を表示させて確認するため、一時的にopacityを1にします。
+       もしJavaScriptによるフワッとした動きに戻したい場合は「opacity: 0;」に戻してください */
+    opacity: 1; 
+    /* animation: fadeInUpText 1.2s ease-out 0.8s forwards; */
 }
 
 .hero-content h1 {
-    font-size: 3rem;          /* パソコンでの文字サイズ */
+    font-size: 3rem;            /* パソコンでの大きな文字サイズ */
     margin: 0;
     line-height: 1.3;
     font-weight: bold;
+}
+
+/* ==========================================
+   4. スマートフォン（縦画面）専用のサイズ調整
+   ========================================== */
+@media (max-width: 768px) {
+    .hero-content h1 {
+        /* 💡 スマホの細い画面でも、絶対に左右にはみ出さないサイズに縮小 */
+        font-size: 1.8rem !important; 
+    }
 }
 
 /* ==========================================
