@@ -86,11 +86,3 @@ h1 {
     /* 💡 見出しより「0.4秒遅れて」文章が現れる時間差エフェクト */
     animation: fadeInUpText 1.5s ease-out 0.4s forwards;
 }
-
-/* アニメーションの動きの定義（下から上に浮き上がる） */
-@keyframes fadeInUpText {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
